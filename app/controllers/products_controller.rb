@@ -1,8 +1,9 @@
 class ProductsController < ApplicationController
 
 	def index
-		@products = Product.includes(:user).all
-	end
+		@products = Product.includes(:user).first(20)
+	    @sum_price = Product.sum(:price).to_f
+ 	end
 
 	def create
 		@product = Product.new(params[:product])

@@ -1,4 +1,18 @@
+
 <h2> Products in the market </h2>
+<div id="highChartContainer" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+<a href="javascript:$('#highChartContainer').toggle()">Chart</a>
+<a href="#" onclick="$('#highChartContainer').toggle()">Chart</a>
+<a href="javascript:void(0)" onclick="$('#highChartContainer').toggle()">ChartSwap</a>
+
+<a href="#" data-hide-element='chart'>Chart_Click_JS_Method</a>
+
+<script type='text/javascript'>
+  $('[data-hide-element=chart]').on('click', function(){
+      $('#highChartContainer').toggle()
+    });
+</script>
 
 <table>
   <tbody>
@@ -20,9 +34,38 @@
   </tbody>
 </table>
 
+
+
+<script type='text/javascript'>
+  console.log('the number of products is ' + '<%= @products.count %>');
+</script>
    
-   
-	
+<script type='text/javascript'>
+$(document).ready(function(){
+
+    chart = new Highcharts.Chart({
+    chart: {
+        renderTo: 'highChartContainer',
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false
+    },
+    title: {
+        text: 'Browser market shares at a specific website, 2010'
+    },
+    series: [{
+        type: 'pie',
+        name: 'Browser share',
+        data: 
+      <%= 
+          @products.map do |product|
+          [product.name,product.price/@sum_price]
+       end.to_json.html_safe
+       %>
+    }]
+  });
+});
+</script>
  
 
 
